@@ -1254,6 +1254,34 @@ body .ui-tooltip {
 .archives-wrap .archives {
   background: transparent;
 }
+.bdshare-button-style2-24 {
+  width: 330px;
+  margin: auto;
+}
+.bdshare-button-style2-24 .fx {
+  color: #999;
+  padding: 0;
+  margin: 6px;
+  height: 54px;
+  display: inline-block;
+  font: normal normal normal 36px/1 FontAwesome;
+  background: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.bdshare-button-style2-24 .fx:hover {
+  color: #fff;
+  opacity: 1;
+}
+themesspfksourcecss_partialmobile.styl,
+.bdshare-button-style2-24 {
+  width: 289px;
+}
+themesspfksourcecss_partialmobile.styl .fx,
+.bdshare-button-style2-24 .fx {
+  font: normal normal normal 30px/1 FontAwesome;
+}
 .body-wrap {
   margin-bottom: 126px;
   overflow: hidden;
@@ -2101,6 +2129,34 @@ aside.comment-bar:active {
 .archives-wrap .archives {
   background: transparent;
 }
+.bdshare-button-style2-24 {
+  width: 330px;
+  margin: auto;
+}
+.bdshare-button-style2-24 .fx {
+  color: #999;
+  padding: 0;
+  margin: 6px;
+  height: 54px;
+  display: inline-block;
+  font: normal normal normal 36px/1 FontAwesome;
+  background: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.bdshare-button-style2-24 .fx:hover {
+  color: #fff;
+  opacity: 1;
+}
+themesspfksourcecss_partialmobile.styl,
+.bdshare-button-style2-24 {
+  width: 289px;
+}
+themesspfksourcecss_partialmobile.styl .fx,
+.bdshare-button-style2-24 .fx {
+  font: normal normal normal 30px/1 FontAwesome;
+}
 .article-entry pre,
 .article-entry .highlight {
   background: rgba(0,0,0,0.67);
@@ -2385,6 +2441,10 @@ pre .javascript .function {
 }
 .bdsharebuttonbox .bds_twi {
   background: #21abf4 !important;
+}
+.addthis_sharing_toolbox {
+  margin-top: 0.5em;
+  margin-left: -2px;
 }
 #page-nav {
   text-align: center;
