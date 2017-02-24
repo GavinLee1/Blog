@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Li Gaozhao" />
+
+
+
+<meta name="description" content="最近刚把个人博客站点搭起来，应几个朋友之邀，同时也是趁着自己还没忘，赶快把搭建过程记录分享一下。因为GitHub我一直有在用，所以个人感觉没有很复杂。如果你对细节没有太多要求的话，跟着这个教程，差不多个2个小时左右可以轻松搞定。如果，你想去仔细研究配置和主题的东西，半天时间下来也差不多可以上线。所以，总的来看就是这么个工作量。具体的，我们接下来慢慢聊。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="十步之内轻松搞定 Hexo + GitHub搭建个人博客">
+<meta property="og:url" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/index.html">
+<meta property="og:site_name" content="GAVIN's Blog">
+<meta property="og:description" content="最近刚把个人博客站点搭起来，应几个朋友之邀，同时也是趁着自己还没忘，赶快把搭建过程记录分享一下。因为GitHub我一直有在用，所以个人感觉没有很复杂。如果你对细节没有太多要求的话，跟着这个教程，差不多个2个小时左右可以轻松搞定。如果，你想去仔细研究配置和主题的东西，半天时间下来也差不多可以上线。所以，总的来看就是这么个工作量。具体的，我们接下来慢慢聊。">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/1Github.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.2.1GenerateSsh.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.2.2AddAgent.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.3.1LocalSSH.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.3.2.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.3.3.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.3.1.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.3.2.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.3.3.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.3.4.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/5hexoInit.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/5hexoserver.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/5run.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/6.1.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/6.2.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/6.3.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/6.4.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/7.1.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/7.2.png">
+<meta property="og:updated_time" content="2017-02-24T20:04:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="十步之内轻松搞定 Hexo + GitHub搭建个人博客">
+<meta name="twitter:description" content="最近刚把个人博客站点搭起来，应几个朋友之邀，同时也是趁着自己还没忘，赶快把搭建过程记录分享一下。因为GitHub我一直有在用，所以个人感觉没有很复杂。如果你对细节没有太多要求的话，跟着这个教程，差不多个2个小时左右可以轻松搞定。如果，你想去仔细研究配置和主题的东西，半天时间下来也差不多可以上线。所以，总的来看就是这么个工作量。具体的，我们接下来慢慢聊。">
+<meta name="twitter:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/1Github.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="GAVIN&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>十步之内轻松搞定 Hexo + GitHub搭建个人博客 | GAVIN&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58aed8fc71b4c2db"></script>
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?3a444c547f2eafcc651f97973114550e";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar-02-21.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Li Gaozhao</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">TECH CORNER</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:ligaozhao@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/GavinLee1" title="GitHub"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/users/234e08dfc25c/timeline" title="简书"></a>
+                            
+                                <a class="fa Facebook" href="https://www.facebook.com/profile.php?id=100008715696799" title="Facebook"></a>
+                            
+                                <a class="fa LinkedIn" href="https://www.linkedin.com/in/gaozhao-li-ba758091?trk=hp-identity-name" title="LinkedIn"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/md/">.md</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiHub-Pages/">GiHub Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub搭建个人站点/">GitHub搭建个人站点</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo主题/">Hexo主题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo写博客/">Hexo写博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo指令/">Hexo指令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo配置/">Hexo配置</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MacOS安装Git/">MacOS安装Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MacOS安装Node/">MacOS安装Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Window安装配置Git/">Window安装配置Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Window安装配置node/">Window安装配置node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yelee/">Yelee</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brew/">brew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/为什么写博客/">为什么写博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/互联网精神/">互联网精神</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分享/">分享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/最值得关注的技术博客/">最值得关注的技术博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">On my way to Full Stacker!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Li Gaozhao</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar-02-21.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Li Gaozhao</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">TECH CORNER</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:ligaozhao@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/GavinLee1" title="GitHub"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/users/234e08dfc25c/timeline" title="简书"></a>
+                            
+                                <a class="fa Facebook" target="_blank" href="https://www.facebook.com/profile.php?id=100008715696799" title="Facebook"></a>
+                            
+                                <a class="fa LinkedIn" target="_blank" href="https://www.linkedin.com/in/gaozhao-li-ba758091?trk=hp-identity-name" title="LinkedIn"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-十步之内轻松搞定-Hexo-GitHub搭建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/" class="article-date">
+      <time datetime="2017-02-24T16:24:53.000Z" itemprop="datePublished">2017-02-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      十步之内轻松搞定 Hexo + GitHub搭建个人博客
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/配置安装教程/">配置安装教程</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/md/">.md</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GiHub-Pages/">GiHub Pages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub/">GitHub</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub搭建个人站点/">GitHub搭建个人站点</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo主题/">Hexo主题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo写博客/">Hexo写博客</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo指令/">Hexo指令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo配置/">Hexo配置</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MacOS安装Git/">MacOS安装Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MacOS安装Node/">MacOS安装Node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Markdown/">Markdown</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Window安装配置Git/">Window安装配置Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Window安装配置node/">Window安装配置node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yelee/">Yelee</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brew/">brew</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>最近刚把个人博客站点搭起来，应几个朋友之邀，同时也是趁着自己还没忘，赶快把搭建过程记录分享一下。因为GitHub我一直有在用，所以个人感觉没有很复杂。如果你对细节没有太多要求的话，跟着这个教程，差不多个2个小时左右可以轻松搞定。如果，你想去仔细研究配置和主题的东西，半天时间下来也差不多可以上线。所以，总的来看就是这么个工作量。具体的，我们接下来慢慢聊。  </p>
+<a id="more"></a>  
+<hr>
+<h3 id="包含的所有技术关键词-以及-简单介绍"><a href="#包含的所有技术关键词-以及-简单介绍" class="headerlink" title="包含的所有技术关键词 以及 简单介绍"></a>包含的所有技术关键词 以及 简单介绍</h3><p><strong><a href="https://git-scm.com/" target="_blank" rel="external">Git</a></strong>: 其实说白了就是帮你管理代码，进行版本控制。让你life easier的东西。官网是这么介绍自己的:  </p>
+<blockquote>
+<p>Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.  </p>
+</blockquote>
+<p>如果你没用过Git, 官方有一个在线的bash 请戳 -&gt; <a href="https://try.github.io/levels/1/challenges/1" target="_blank" rel="external">https://try.github.io/levels/1/challenges/1</a><br>拢共大概十个命令，日常工作也完全是够用了。更高级的用法请自行Google…  </p>
+<p><strong><a href="https://github.com/" target="_blank" rel="external">GitHub</a></strong>: 我也不瞎编了, 人家维基百科[3]是这么说的：  </p>
+<blockquote>
+<p>GitHub是一个通过Git进行版本控制的软件源代码托管服务。GitHub同时提供付费账户和免费账户。这两种账户都可以创建公开的代码仓库，但是付费账户还可以创建私有的代码仓库。根据在2009年的Git用户调查，GitHub是最流行的Git访问站点。除了允许个人和组织创建和访问保管中的代码以外，它也提供了一些方便社会化共同软件开发的功能，即一般人口中的社区功能，包括允许用户追踪其他用户、组织、软件库的动态，对软件代码的改动和bug提出评论等。GitHub也提供了图表功能，用于概观显示开发者们怎样在代码库上工作以及软件的开发活跃程度。  </p>
+</blockquote>
+<p><strong>Hexo</strong>: 是一个快速，简洁且高效的博客框架 <a href="https://hexo.io/zh-cn/" target="_blank" rel="external">中文官方网站</a>  </p>
+<p><strong><a href="http://www.markdown.cn/" target="_blank" rel="external">Markdown</a></strong>: 所有博客原始文件都是 <strong>.md</strong> 文件。都是用它来写的。好吧，如果你知道 <strong>txt</strong> 的话，其实他们是一类玩意儿。  </p>
+<blockquote>
+<p>Markdown 是一种轻量级标记语言，创始人为約翰·格魯伯（John Gruber）。 它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的XHTML(或者HTML)文档”。    </p>
+</blockquote>
+<hr>
+<p>画个分界线  - 教程正式开始  </p>
+<hr>
+<h2 id="1-如果你用MacOS-请先安装一下-brew"><a href="#1-如果你用MacOS-请先安装一下-brew" class="headerlink" title="1. 如果你用MacOS, 请先安装一下 brew"></a>1. 如果你用MacOS, 请先安装一下 brew</h2><pre><code class="bash">ruby <span class="_">-e</span> <span class="string">"<span class="variable">$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)</span>"</span>
+</code></pre>
+<h2 id="2-安装-Git"><a href="#2-安装-Git" class="headerlink" title="2. 安装 Git"></a>2. 安装 Git</h2><pre><code class="bash">brew install git
+</code></pre>
+<p>Windows下安装配置Git请参考: <a href="https://my.oschina.net/u/998304/blog/353386" target="_blank" rel="external">Win7上Git安装及简单配置过程</a>  </p>
+<h2 id="3-注册GitHub-获取并上传本机SSH-新建一个代码库"><a href="#3-注册GitHub-获取并上传本机SSH-新建一个代码库" class="headerlink" title="3. 注册GitHub 获取并上传本机SSH 新建一个代码库"></a>3. 注册GitHub 获取并上传本机SSH 新建一个代码库</h2><h5 id="3-1-注册GitHub"><a href="#3-1-注册GitHub" class="headerlink" title="3.1 注册GitHub"></a>3.1 注册GitHub</h5><hr>
+<p><a href="https://github.com" target="_blank" rel="external">登录官网</a>，一步一步往下点就行了<br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/1Github.png" alt="注册GitHub" title="注册GitHub">  </p>
+<h5 id="3-2-获取并上传本机SSH"><a href="#3-2-获取并上传本机SSH" class="headerlink" title="3.2 获取并上传本机SSH"></a>3.2 获取并上传本机SSH</h5><hr>
+<p>关于这一步, GitHub上面有很清晰的指导   -&gt; <a href="https://help.github.com/articles/connecting-to-github-with-ssh/" target="_blank" rel="external">链接地址</a><br>为了本文的完整性，我截几个图放这里:<br><strong>3.2.1 首先查看自己电脑里是否已经有了SSH key, 如果有了直接上传就行</strong>  </p>
+<pre><code class="bash">ls -al ~/.ssh
+</code></pre>
+<p><strong>3.2.2 如果还没有, 你需要执行以下几步</strong><br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.2.1GenerateSsh.png" alt="Generate SSH" title="Generate SSH"><br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.2.2AddAgent.png" alt="Add SSH-Agent" title="Add SSH-Agent"><br><strong>3.2.3 上一步成功之后</strong><br>去你的本地找到以下文件，拷贝里面的内容 <strong>注意不要前后空格</strong><br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.3.1LocalSSH.png" alt="Local SSH" title="Local SSH"><br>然后回到, GitHub, 到以下页面进行添加<br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.3.2.png" alt="添加SSH" title="添加SSH"><br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.2.3.3.png" alt="添加SSH" title="添加SSH">  </p>
+<h5 id="3-3-新建一个代码库-这个略关键"><a href="#3-3-新建一个代码库-这个略关键" class="headerlink" title="3.3 新建一个代码库  - 这个略关键"></a>3.3 新建一个代码库  - 这个略关键</h5><hr>
+<p>首先，GitHub有个功能叫 <strong>GitHub Pages</strong>。这个也是本教程的<strong>关键</strong>。你可以使用GitHub Pages直接从代码库生成个人站点，运行之后，直接通过GitHub提供的域名（用户名+github+io)进行访问。但是，为了使用这个功能，我们必须符合他们的规范: 新建Repository时, name 对应处填写资源名，需要使用自己的用户名，<strong>每个用户名下面只能建立一个</strong>，资源命名 <strong>必须符合这样的规则username/username.github.io</strong>  </p>
+<p><strong>3.3.1 首页选择新建Repository</strong>  </p>
+<img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.3.1.png" alt="新建Repository" title="新建Repository">  
+<p><strong>3.3.2 项目名称设置为 yourname.github.io 并clone到本地</strong>  </p>
+<img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.3.2.png" alt="yourname.github.io" title="yourname.github.io">  
+<p><strong>3.3.3 项目创建成功之后，去项目页面，点击settings</strong>  </p>
+<p><strong>页面往下拉，找到 GitHub Pages 分支选择master 并保存</strong><br><strong>大概过10分钟左右，你的页面就可以直接通过yourname.github.io进行访问了</strong><br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.3.3.png" alt="新建Repository" title="新建Repository"><br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/3.3.4.png" alt="新建Repository" title="新建Repository">   </p>
+<h2 id="4-重点来了-安装-Hexo"><a href="#4-重点来了-安装-Hexo" class="headerlink" title="4. 重点来了 - 安装 Hexo"></a>4. 重点来了 - 安装 Hexo</h2><p>开始之前, 请确保你的本机成功正确的安装了Node。<br>如果没有, 如果你用Mac, 同样一键傻瓜式安装:  </p>
+<pre><code class="bash">brew install node
+</code></pre>
+<p>Windows 同样请参考  -&gt;  <a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank" rel="external">Node.js 安装配置</a>  </p>
+<p>其实吧, <strong>Hexo</strong> 安装起来超级简单, 就一行命令就行:  </p>
+<pre><code class="bash">$ npm install hexo-cli -g
+</code></pre>
+<h2 id="5-继续划重点-初始化-Hexo"><a href="#5-继续划重点-初始化-Hexo" class="headerlink" title="5. 继续划重点 - 初始化 Hexo"></a>5. 继续划重点 - 初始化 Hexo</h2><p>先建个文件夹  </p>
+<pre><code class="bash">mkdir HelloB<span class="built_in">log</span>
+</code></pre>
+<p>进入文件夹, 执行命令:  </p>
+<pre><code class="bash">hexo init  
+npm install
+</code></pre>
+<p>然后等待 下载安装一大堆东西 …  大概应该是这个样子的  …<br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/5hexoInit.png" alt="hexo init" title="hexo init">  </p>
+<p>这两步完成之后, 当前目录下, 继续执行命令:  </p>
+<pre><code class="bash">hexo generate   或者是  hexo g
+</code></pre>
+<p>然后, 执行:  </p>
+<pre><code class="bash">hexo server    或者是  hexo s
+</code></pre>
+<img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/5hexoserver.png" alt="hexo server" title="hexo server">  
+<p>你就会发现, 本地的Blog已经跑起来了…<br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/5run.png" alt="效果" title="效果">  </p>
+<h2 id="6-重点中的重点-修改配置文件并部署到GitHub"><a href="#6-重点中的重点-修改配置文件并部署到GitHub" class="headerlink" title="6. 重点中的重点 - 修改配置文件并部署到GitHub"></a>6. 重点中的重点 - 修改配置文件并部署到GitHub</h2><p>首先来看一下, 初始化项目的目录结构长什么样子…<br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/6.1.png" alt="目录结构" title="目录结构"><br>我们需要修改的就是根目录下的这个 <strong>_config.yml</strong> 顺嘴提一句, 博客的原始文件会存在source/_posts/ 下面  </p>
+<p>用 <strong>Sublime</strong> 或者 <strong>Atom</strong> 打开文件进行修改<br>关于配置文件的具体信息, 可以参考 -&gt; <a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">https://hexo.io/zh-cn/docs/configuration.html</a>  </p>
+<p>首先是改一下Blog的基本信息:<br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/6.2.png" alt="6.2.png" title="">  </p>
+<p>最重要的是添加部署的信息, <strong>deploy</strong>这里只用替换repo就行了, 指向你在GitHub里新建的那个库<br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/6.3.png" alt="Deploy信息" title="Deploy信息">  </p>
+<p>修改完, 保存之后, 根目录下执行:  </p>
+<pre><code class="bash">hexo deploy        或者        hexo d
+</code></pre>
+<p>如果一切顺利的话, 就可以成功部署到GitHub上了<br><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/6.4.png" alt="Deploy信息" title="Deploy信息"><br>等几分钟就可以通过 -&gt; <a href="gavinlee1.github.io">gavinlee1.github.io</a> 进行访问了  </p>
+<h2 id="7-你感兴趣的-关于主题的事情"><a href="#7-你感兴趣的-关于主题的事情" class="headerlink" title="7.你感兴趣的 - 关于主题的事情"></a>7.你感兴趣的 - 关于主题的事情</h2><p>Hexo有很多开源的主题和插件可以添加配置。以本博客为例, 我用的主题叫 <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" rel="external">Yelee</a> 可以在github上找到源码和对应的wiki介绍。<br>添加个人主题, 主要有这么几步:  </p>
+<h5 id="7-1-在-theme-目录下-git-clone-你想要的主题"><a href="#7-1-在-theme-目录下-git-clone-你想要的主题" class="headerlink" title="7.1 在 theme 目录下 git clone 你想要的主题"></a>7.1 在 theme 目录下 git clone 你想要的主题</h5><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/7.1.png" alt="Deploy信息" title="Deploy信息">  
+<h5 id="7-2-修改全局配置文件-config-yml-替换主题"><a href="#7-2-修改全局配置文件-config-yml-替换主题" class="headerlink" title="7.2 修改全局配置文件 (/_config.yml) - 替换主题"></a>7.2 修改全局配置文件 (/_config.yml) - 替换主题</h5><img src="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/7.2.png" alt="Deploy信息" title="Deploy信息">  
+<h5 id="7-3-配置和定制主题的显示内容"><a href="#7-3-配置和定制主题的显示内容" class="headerlink" title="7.3 配置和定制主题的显示内容"></a>7.3 配置和定制主题的显示内容</h5><p>你可以在 <a href="https://hexo.io/themes/" target="_blank" rel="external">https://hexo.io/themes/</a> 这里找到你想要的主题。但是不同主题有自己的配置信息结构和修改方法, 具体需要参考你所选主题在GitHub上的wiki。当然, 万变不离其宗的是修改<strong>主题目录下的(_config.yml)</strong>  </p>
+<p>以我用的主题为例 <a href="http://moxfive.coding.me/yelee/" target="_blank" rel="external">Yelee 主题使用说明 [简中] </a>  官方提供完整的配置使用说明书。你可以参考该说明, 修改配置文件, 字体, 高亮格式 以及 包括分享 评论 在内的各种插件。  </p>
+<h2 id="8-怎么写博客？"><a href="#8-怎么写博客？" class="headerlink" title="8.怎么写博客？"></a>8.怎么写博客？</h2><p>执行命令:  </p>
+<pre><code class="bash">hexo new post <span class="string">"This is the tile for new post."</span>
+</code></pre>
+<p>这个命令会在 /source/_post/ 下生成 title.md 文件。这个<strong>.md</strong>文件就是你博客的原始文件。编辑完之后，hexo会解析这个文件生成对应的静态网页。然后执行命令进行部署:  </p>
+<pre><code class="bash">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy
+</code></pre>
+<h1 id="还等什么？-赶快搭建你自己的Blog咯"><a href="#还等什么？-赶快搭建你自己的Blog咯" class="headerlink" title="还等什么？ 赶快搭建你自己的Blog咯"></a>还等什么？ 赶快搭建你自己的Blog咯</h1><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p>[1] Git <a href="https://git-scm.com/" target="_blank" rel="external">https://git-scm.com/</a><br>[2] Hexo <a href="https://hexo.io/zh-cn/" target="_blank" rel="external">https://hexo.io/zh-cn/</a><br>[3] 维基百科 - GitHub <a href="https://zh.wikipedia.org/wiki/GitHub" target="_blank" rel="external">https://zh.wikipedia.org/wiki/GitHub</a><br>[4] <a href="https://my.oschina.net/u/998304/blog/353386" target="_blank" rel="external">Win7上Git安装及简单配置过程</a><br>[5] <a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank" rel="external">Node.js 安装配置</a><br>[6] <a href="http://moxfive.coding.me/yelee/" target="_blank" rel="external">Yelee 主题使用说明 [简中] </a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/">十步之内轻松搞定 Hexo + GitHub搭建个人博客</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Li Gaozhao</a></p>
+        <p><span>发布时间:</span>2017-02-25, 00:24:53</p>
+        <p><span>最后更新:</span>2017-02-25, 04:04:47</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/" title="十步之内轻松搞定 Hexo + GitHub搭建个人博客">https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/　　作者: Li Gaozhao" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/02/23/Hello-World来谈谈为什么写博客/">
+                    Hello World来谈谈为什么写博客
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#包含的所有技术关键词-以及-简单介绍"><span class="toc-number">1.</span> <span class="toc-text">包含的所有技术关键词 以及 简单介绍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-如果你用MacOS-请先安装一下-brew"><span class="toc-number"></span> <span class="toc-text">1. 如果你用MacOS, 请先安装一下 brew</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-安装-Git"><span class="toc-number"></span> <span class="toc-text">2. 安装 Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-注册GitHub-获取并上传本机SSH-新建一个代码库"><span class="toc-number"></span> <span class="toc-text">3. 注册GitHub 获取并上传本机SSH 新建一个代码库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-注册GitHub"><span class="toc-number">0.0.1.</span> <span class="toc-text">3.1 注册GitHub</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-获取并上传本机SSH"><span class="toc-number">0.0.2.</span> <span class="toc-text">3.2 获取并上传本机SSH</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-新建一个代码库-这个略关键"><span class="toc-number">0.0.3.</span> <span class="toc-text">3.3 新建一个代码库  - 这个略关键</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-重点来了-安装-Hexo"><span class="toc-number"></span> <span class="toc-text">4. 重点来了 - 安装 Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-继续划重点-初始化-Hexo"><span class="toc-number"></span> <span class="toc-text">5. 继续划重点 - 初始化 Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-重点中的重点-修改配置文件并部署到GitHub"><span class="toc-number"></span> <span class="toc-text">6. 重点中的重点 - 修改配置文件并部署到GitHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-你感兴趣的-关于主题的事情"><span class="toc-number"></span> <span class="toc-text">7.你感兴趣的 - 关于主题的事情</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#7-1-在-theme-目录下-git-clone-你想要的主题"><span class="toc-number">0.0.1.</span> <span class="toc-text">7.1 在 theme 目录下 git clone 你想要的主题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-2-修改全局配置文件-config-yml-替换主题"><span class="toc-number">0.0.2.</span> <span class="toc-text">7.2 修改全局配置文件 (/_config.yml) - 替换主题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-3-配置和定制主题的显示内容"><span class="toc-number">0.0.3.</span> <span class="toc-text">7.3 配置和定制主题的显示内容</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-怎么写博客？"><span class="toc-number"></span> <span class="toc-text">8.怎么写博客？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#还等什么？-赶快搭建你自己的Blog咯"><span class="toc-number"></span> <span class="toc-text">还等什么？ 赶快搭建你自己的Blog咯</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#References"><span class="toc-number">1.</span> <span class="toc-text">References</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"十步之内轻松搞定 Hexo + GitHub搭建个人博客　| GAVIN's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section id="comments">
+    <style> aside.comment-bar { margin: auto 30px; }</style>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function(){
+            this.page.url = 'https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/';
+            this.page.identifier = '2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/';
+        };
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = '//gavintechblog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+</section>
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/02/23/Hello-World来谈谈为什么写博客/" title="下一篇: Hello World来谈谈为什么写博客">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/">十步之内轻松搞定 Hexo + GitHub搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/23/Hello-World来谈谈为什么写博客/">Hello World来谈谈为什么写博客</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017 Li Gaozhao
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-92404866-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
