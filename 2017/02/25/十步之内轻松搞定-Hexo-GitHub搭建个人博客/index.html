@@ -1,17 +1,101 @@
-<!DOCTYPE html>
-<html lang="zh-Hans">
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
-    <!--[if lt IE 9]>
-        <style>body {display: none; background: none !important} </style>
-        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
-    <![endif]-->
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no" />
-<meta name="author" content="Li Gaozhao" />
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Git,GitHub,GiHub Pages,Hexo,Blog,.md,Markdown,Hexo主题,Hexo配置,Hexo指令,Yelee,MacOS安装Git,brew,MacOS安装Node,npm,Window安装配置Git,Window安装配置node,Hexo写博客,GitHub搭建个人站点," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
 
 
 
@@ -46,313 +130,362 @@
 <meta name="twitter:description" content="最近刚把个人博客站点搭起来，应几个朋友之邀，同时也是趁着自己还没忘，赶快把搭建过程记录分享一下。因为GitHub我一直有在用，所以个人感觉没有很复杂。如果你对细节没有太多要求的话，跟着这个教程，差不多个2个小时左右可以轻松搞定。如果，你想去仔细研究配置和主题的东西，半天时间下来也差不多可以上线。所以，总的来看就是这么个工作量。具体的，我们接下来慢慢聊。">
 <meta name="twitter:image" content="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/1Github.png">
 
-<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
 
-    <link rel="alternate" href="/atom.xml" title="GAVIN&#39;s Blog" type="application/atom+xml">
-
-
-
-    <link rel="shortcut icon" href="/favicon.png">
-
-
-
-    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
-
-
-
-    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
-
-
-
-    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
-
-
-<link rel="stylesheet" href="/css/style.css">
-
-
-
-<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-
-
-<title>十步之内轻松搞定 Hexo + GitHub搭建个人博客 | GAVIN&#39;s Blog</title>
-
-<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
-
-<script>
-    var yiliaConfig = {
-        fancybox: true,
-        animate: true,
-        isHome: false,
-        isPost: true,
-        isArchive: false,
-        isTag: false,
-        isCategory: false,
-        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
-        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: true
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'EWAM3Y8D50',
+      apiKey: '32ac3dfe3600824d7d8353bf46b0e9fc',
+      indexName: 'github.io',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
+  };
 </script>
 
 
-    <script>
-        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
-    </script>
+
+  <link rel="canonical" href="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/"/>
 
 
 
-    <script> yiliaConfig.rootUrl = "\/";</script>
 
 
-
-    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58aed8fc71b4c2db"></script>
-
-
-
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?3a444c547f2eafcc651f97973114550e";
-            var s = document.getElementsByTagName("script")[0]; 
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
-
-
+  <title> 十步之内轻松搞定 Hexo + GitHub搭建个人博客 | GAVIN's Blog </title>
 </head>
-<body>
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            <img src="/img/avatar-02-21.png" class="animated zoomIn">
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a href="/">Li Gaozhao</a></h1>
-        </hgroup>
 
-        
-        <p class="header-subtitle">TECH CORNER</p>
-        
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-        
-            <form id="search-form">
-            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
-            <i class="fa fa-times" onclick="resetSearch()"></i>
-            </form>
-            <div id="local-search-result"></div>
-            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
-        
+  
 
 
-        
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
-                        
-                        <li>友情链接</li>
-                        
-                        
-                        <li>关于我</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
 
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/">主页</a></li>
-                        
-                            <li><a href="/archives/">所有文章</a></li>
-                        
-                            <li><a href="/tags/">标签云</a></li>
-                        
-                            <li><a href="/about/">关于我</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" href="mailto:ligaozhao@gmail.com" title="Email"></a>
-                            
-                                <a class="fa GitHub" href="https://github.com/GavinLee1" title="GitHub"></a>
-                            
-                                <a class="fa 简书" href="http://www.jianshu.com/users/234e08dfc25c/timeline" title="简书"></a>
-                            
-                                <a class="fa Facebook" href="https://www.facebook.com/profile.php?id=100008715696799" title="Facebook"></a>
-                            
-                                <a class="fa LinkedIn" href="https://www.linkedin.com/in/gaozhao-li-ba758091?trk=hp-identity-name" title="LinkedIn"></a>
-                            
-                        </ul>
-                    </nav>
-                </section>
-                
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/md/">.md</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GiHub-Pages/">GiHub Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub搭建个人站点/">GitHub搭建个人站点</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo主题/">Hexo主题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo写博客/">Hexo写博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo指令/">Hexo指令</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo配置/">Hexo配置</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MacOS安装Git/">MacOS安装Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MacOS安装Node/">MacOS安装Node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Window安装配置Git/">Window安装配置Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Window安装配置node/">Window安装配置node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yelee/">Yelee</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brew/">brew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/为什么写博客/">为什么写博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/互联网精神/">互联网精神</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分享/">分享</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/最值得关注的技术博客/">最值得关注的技术博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/记录/">记录</a></li></ul>
-                    </div>
-                </section>
-                
-                
-                
-                <section class="switch-part switch-part3">
-                    <div id="js-friends">
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
-                    
-                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
-                    
-                    </div>
-                </section>
-                
 
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">On my way to Full Stacker!</div>
-                </section>
-                
-            </div>
-        </div>
-    </header>                
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-92404866-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3a444c547f2eafcc651f97973114550e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=61115622";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GAVIN's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">TECH CORNER</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-      <div class="overlay">
-          <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Li Gaozhao</a></h1>
-      </div>
-    <div class="intrude-less">
-        <header id="header" class="inner">
-            <a href="/" class="profilepic">
-                <img src="/img/avatar-02-21.png" class="animated zoomIn">
-            </a>
-            <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页">Li Gaozhao</a></h1>
-            </hgroup>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
-            <p class="header-subtitle">TECH CORNER</p>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            <nav class="header-menu">
-                <ul>
-                
-                    <li><a href="/">主页</a></li>
-                
-                    <li><a href="/archives/">所有文章</a></li>
-                
-                    <li><a href="/tags/">标签云</a></li>
-                
-                    <li><a href="/about/">关于我</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-            <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" target="_blank" href="mailto:ligaozhao@gmail.com" title="Email"></a>
-                            
-                                <a class="fa GitHub" target="_blank" href="https://github.com/GavinLee1" title="GitHub"></a>
-                            
-                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/users/234e08dfc25c/timeline" title="简书"></a>
-                            
-                                <a class="fa Facebook" target="_blank" href="https://www.facebook.com/profile.php?id=100008715696799" title="Facebook"></a>
-                            
-                                <a class="fa LinkedIn" target="_blank" href="https://www.linkedin.com/in/gaozhao-li-ba758091?trk=hp-identity-name" title="LinkedIn"></a>
-                            
-                        </ul>
-            </nav>
-        </header>                
-    </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
-</nav>
-      <div class="body-wrap"><article id="post-十步之内轻松搞定-Hexo-GitHub搭建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/" class="article-date">
-      <time datetime="2017-02-24T16:24:53.000Z" itemprop="datePublished">2017-02-25</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      十步之内轻松搞定 Hexo + GitHub搭建个人博客
-    </h1>
-  
-
-      </header>
+            首页
+          </a>
+        </li>
       
-      <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/配置安装教程/">配置安装教程</a>
-    </div>
-
-
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/md/">.md</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GiHub-Pages/">GiHub Pages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub/">GitHub</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub搭建个人站点/">GitHub搭建个人站点</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo主题/">Hexo主题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo写博客/">Hexo写博客</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo指令/">Hexo指令</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo配置/">Hexo配置</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MacOS安装Git/">MacOS安装Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MacOS安装Node/">MacOS安装Node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Markdown/">Markdown</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Window安装配置Git/">Window安装配置Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Window安装配置node/">Window安装配置node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yelee/">Yelee</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brew/">brew</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li></ul>
-    </div>
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
 
-        <div class="clearfix"></div>
-      </div>
       
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+        <li class="menu-item menu-item-search">
           
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="【五行僧】">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar-02-21.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GAVIN's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                十步之内轻松搞定 Hexo + GitHub搭建个人博客
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-25T00:24:53+08:00">
+                2017-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/配置安装教程/" itemprop="url" rel="index">
+                    <span itemprop="name">配置安装教程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         <p>最近刚把个人博客站点搭起来，应几个朋友之邀，同时也是趁着自己还没忘，赶快把搭建过程记录分享一下。因为GitHub我一直有在用，所以个人感觉没有很复杂。如果你对细节没有太多要求的话，跟着这个教程，差不多个2个小时左右可以轻松搞定。如果，你想去仔细研究配置和主题的东西，半天时间下来也差不多可以上线。所以，总的来看就是这么个工作量。具体的，我们接下来慢慢聊。  </p>
 <a id="more"></a>  
 <hr>
@@ -439,249 +572,648 @@ npm install
 
       
     </div>
-    
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="【五行僧】 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpeg" alt="【五行僧】 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
   </div>
-  
-    
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/">十步之内轻松搞定 Hexo + GitHub搭建个人博客</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">Li Gaozhao</a></p>
-        <p><span>发布时间:</span>2017-02-25, 00:24:53</p>
-        <p><span>最后更新:</span>2017-02-25, 04:04:47</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/" title="十步之内轻松搞定 Hexo + GitHub搭建个人博客">https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/　　作者: Li Gaozhao" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-        </p>
+
+
+      
     </div>
 
 
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Git/" rel="tag"># Git</a>
+          
+            <a href="/tags/GitHub/" rel="tag"># GitHub</a>
+          
+            <a href="/tags/GiHub-Pages/" rel="tag"># GiHub Pages</a>
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/Blog/" rel="tag"># Blog</a>
+          
+            <a href="/tags/md/" rel="tag"># .md</a>
+          
+            <a href="/tags/Markdown/" rel="tag"># Markdown</a>
+          
+            <a href="/tags/Hexo主题/" rel="tag"># Hexo主题</a>
+          
+            <a href="/tags/Hexo配置/" rel="tag"># Hexo配置</a>
+          
+            <a href="/tags/Hexo指令/" rel="tag"># Hexo指令</a>
+          
+            <a href="/tags/Yelee/" rel="tag"># Yelee</a>
+          
+            <a href="/tags/MacOS安装Git/" rel="tag"># MacOS安装Git</a>
+          
+            <a href="/tags/brew/" rel="tag"># brew</a>
+          
+            <a href="/tags/MacOS安装Node/" rel="tag"># MacOS安装Node</a>
+          
+            <a href="/tags/npm/" rel="tag"># npm</a>
+          
+            <a href="/tags/Window安装配置Git/" rel="tag"># Window安装配置Git</a>
+          
+            <a href="/tags/Window安装配置node/" rel="tag"># Window安装配置node</a>
+          
+            <a href="/tags/Hexo写博客/" rel="tag"># Hexo写博客</a>
+          
+            <a href="/tags/GitHub搭建个人站点/" rel="tag"># GitHub搭建个人站点</a>
+          
+        </div>
+      
 
-    <nav id="article-nav">
+      
         
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/23/Hello-World来谈谈为什么写博客/" rel="next" title="Hello World来谈谈为什么写博客">
+                <i class="fa fa-chevron-left"></i> Hello World来谈谈为什么写博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
         
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/02/23/Hello-World来谈谈为什么写博客/">
-                    Hello World来谈谈为什么写博客
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar-02-21.png"
+               alt="【五行僧】" />
+          <p class="site-author-name" itemprop="name">【五行僧】</p>
+           
+              <p class="site-description motion-element" itemprop="description">人不作 事不能拖 话不能多 如此 你若盛开 清风自来</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="mailto:ligaozhao@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
                 </a>
-            </div>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/GavinLee1" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="ttp://www.jianshu.com/users/234e08dfc25c/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-pencil-square-o"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100008715696799" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/gaozhao-li-ba758091?trk=hp-identity-name" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+          
+        </div>
+
         
-    </nav>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#包含的所有技术关键词-以及-简单介绍"><span class="nav-number">1.</span> <span class="nav-text">包含的所有技术关键词 以及 简单介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-如果你用MacOS-请先安装一下-brew"><span class="nav-number"></span> <span class="nav-text">1. 如果你用MacOS, 请先安装一下 brew</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-安装-Git"><span class="nav-number"></span> <span class="nav-text">2. 安装 Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-注册GitHub-获取并上传本机SSH-新建一个代码库"><span class="nav-number"></span> <span class="nav-text">3. 注册GitHub 获取并上传本机SSH 新建一个代码库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-注册GitHub"><span class="nav-number">0.0.1.</span> <span class="nav-text">3.1 注册GitHub</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-获取并上传本机SSH"><span class="nav-number">0.0.2.</span> <span class="nav-text">3.2 获取并上传本机SSH</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-新建一个代码库-这个略关键"><span class="nav-number">0.0.3.</span> <span class="nav-text">3.3 新建一个代码库  - 这个略关键</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-重点来了-安装-Hexo"><span class="nav-number"></span> <span class="nav-text">4. 重点来了 - 安装 Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-继续划重点-初始化-Hexo"><span class="nav-number"></span> <span class="nav-text">5. 继续划重点 - 初始化 Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-重点中的重点-修改配置文件并部署到GitHub"><span class="nav-number"></span> <span class="nav-text">6. 重点中的重点 - 修改配置文件并部署到GitHub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-你感兴趣的-关于主题的事情"><span class="nav-number"></span> <span class="nav-text">7.你感兴趣的 - 关于主题的事情</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#7-1-在-theme-目录下-git-clone-你想要的主题"><span class="nav-number">0.0.1.</span> <span class="nav-text">7.1 在 theme 目录下 git clone 你想要的主题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-2-修改全局配置文件-config-yml-替换主题"><span class="nav-number">0.0.2.</span> <span class="nav-text">7.2 修改全局配置文件 (/_config.yml) - 替换主题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-3-配置和定制主题的显示内容"><span class="nav-number">0.0.3.</span> <span class="nav-text">7.3 配置和定制主题的显示内容</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-怎么写博客？"><span class="nav-number"></span> <span class="nav-text">8.怎么写博客？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#还等什么？-赶快搭建你自己的Blog咯"><span class="nav-number"></span> <span class="nav-text">还等什么？ 赶快搭建你自己的Blog咯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">【五行僧】</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
-</article>
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
 
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#包含的所有技术关键词-以及-简单介绍"><span class="toc-number">1.</span> <span class="toc-text">包含的所有技术关键词 以及 简单介绍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-如果你用MacOS-请先安装一下-brew"><span class="toc-number"></span> <span class="toc-text">1. 如果你用MacOS, 请先安装一下 brew</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-安装-Git"><span class="toc-number"></span> <span class="toc-text">2. 安装 Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-注册GitHub-获取并上传本机SSH-新建一个代码库"><span class="toc-number"></span> <span class="toc-text">3. 注册GitHub 获取并上传本机SSH 新建一个代码库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-注册GitHub"><span class="toc-number">0.0.1.</span> <span class="toc-text">3.1 注册GitHub</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-获取并上传本机SSH"><span class="toc-number">0.0.2.</span> <span class="toc-text">3.2 获取并上传本机SSH</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-新建一个代码库-这个略关键"><span class="toc-number">0.0.3.</span> <span class="toc-text">3.3 新建一个代码库  - 这个略关键</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-重点来了-安装-Hexo"><span class="toc-number"></span> <span class="toc-text">4. 重点来了 - 安装 Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-继续划重点-初始化-Hexo"><span class="toc-number"></span> <span class="toc-text">5. 继续划重点 - 初始化 Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-重点中的重点-修改配置文件并部署到GitHub"><span class="toc-number"></span> <span class="toc-text">6. 重点中的重点 - 修改配置文件并部署到GitHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-你感兴趣的-关于主题的事情"><span class="toc-number"></span> <span class="toc-text">7.你感兴趣的 - 关于主题的事情</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#7-1-在-theme-目录下-git-clone-你想要的主题"><span class="toc-number">0.0.1.</span> <span class="toc-text">7.1 在 theme 目录下 git clone 你想要的主题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-2-修改全局配置文件-config-yml-替换主题"><span class="toc-number">0.0.2.</span> <span class="toc-text">7.2 修改全局配置文件 (/_config.yml) - 替换主题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-3-配置和定制主题的显示内容"><span class="toc-number">0.0.3.</span> <span class="toc-text">7.3 配置和定制主题的显示内容</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-怎么写博客？"><span class="toc-number"></span> <span class="toc-text">8.怎么写博客？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#还等什么？-赶快搭建你自己的Blog咯"><span class="toc-number"></span> <span class="toc-text">还等什么？ 赶快搭建你自己的Blog咯</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#References"><span class="toc-number">1.</span> <span class="toc-text">References</span></a></li></ol>
-        
-    </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-3 i,
-        .toc-level-3 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
-
-
-
-    
-<div class="share">
-    
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
-        </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"十步之内轻松搞定 Hexo + GitHub搭建个人博客　| GAVIN's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
-
-    
-        <div class="addthis_sharing_toolbox"></div>
-    
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
 </div>
 
 
 
-
-
-
+        
+      </div>
+    </footer>
 
     
-        <section id="comments">
-    <style> aside.comment-bar { margin: auto 30px; }</style>
-    <div id="disqus_thread"></div>
-    <script>
-        var disqus_config = function(){
-            this.page.url = 'https://gavinlee1.github.io/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/';
-            this.page.identifier = '2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/';
-        };
-        var loadComment = function(){
-            var d = document, s = d.createElement('script');
-            s.src = '//gavintechblog.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        }
-    </script>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
-    <script> loadComment(); </script>
-
-</section>
-
-
     
-
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2017/02/23/Hello-World来谈谈为什么写博客/" title="下一篇: Hello World来谈谈为什么写博客">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/">十步之内轻松搞定 Hexo + GitHub搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/23/Hello-World来谈谈为什么写博客/">Hello World来谈谈为什么写博客</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
-
-</div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="footer-left">
-                <i class="fa fa-copyright"></i> 
-                2017 Li Gaozhao
-            </div>
-            <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
-            </div>
-        </div>
-        
-            <div class="visit">
-                
-                    <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
-                        </span>
-                    </span>
-                
-                
-                    <span>| </span>
-                
-                
-                    <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    </span>
-                
-            </div>
-        
-    </div>
-</footer>
-    </div>
-    
-<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
-
-
-
-<!-- Google Analytics -->
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-92404866-1', 'auto');
-ga('send', 'pageview');
-
-</script>
-<!-- End Google Analytics -->
-
-
-
-    <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-<div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
-</div>
-<script>
-    // Open in New Window
-    
-        var oOpenInNew = {
-            
-            
-            
-            
-            
-            
-             archives: ".archive-article-title", 
-             miniArchives: "a.post-list-link", 
-            
-             friends: "#js-friends a", 
-             socail: ".social a" 
-        }
-        for (var x in oOpenInNew) {
-            $(oOpenInNew[x]).attr("target", "_blank");
-        }
-    
-</script>
-
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
   </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'gavintechblog';
+      var disqus_identifier = '2017/02/25/十步之内轻松搞定-Hexo-GitHub搭建个人博客/';
+
+      var disqus_title = "十步之内轻松搞定 Hexo + GitHub搭建个人博客";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
 </body>
 </html>
