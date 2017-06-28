@@ -1,0 +1,1190 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="DB,数据库,唯一主键,auto_increment,uuid,Redis生成id,INCR,INCRBY,snowflake," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="全局唯一的 ID 几乎是所有系统都会遇到的刚需求。这个 id 在搜索, 存储数据, 加快检索速度 等等很多方面有着重要的意义。工业上有多种策略来获取这个全局唯一的id，针对常见的几种场景，我在这里进行简单的总结和对比。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见分布式全局唯一ID生成策略及算法的对比">
+<meta property="og:url" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/index.html">
+<meta property="og:site_name" content="GAVIN's Blog">
+<meta property="og:description" content="全局唯一的 ID 几乎是所有系统都会遇到的刚需求。这个 id 在搜索, 存储数据, 加快检索速度 等等很多方面有着重要的意义。工业上有多种策略来获取这个全局唯一的id，针对常见的几种场景，我在这里进行简单的总结和对比。">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise01.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise02.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise03.png">
+<meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/snowflake.png">
+<meta property="og:updated_time" content="2017-06-28T12:03:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见分布式全局唯一ID生成策略及算法的对比">
+<meta name="twitter:description" content="全局唯一的 ID 几乎是所有系统都会遇到的刚需求。这个 id 在搜索, 存储数据, 加快检索速度 等等很多方面有着重要的意义。工业上有多种策略来获取这个全局唯一的id，针对常见的几种场景，我在这里进行简单的总结和对比。">
+<meta name="twitter:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'EWAM3Y8D50',
+      apiKey: '32ac3dfe3600824d7d8353bf46b0e9fc',
+      indexName: 'github.io',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/"/>
+
+
+
+
+
+  <title> 常见分布式全局唯一ID生成策略及算法的对比 | GAVIN's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-92404866-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3a444c547f2eafcc651f97973114550e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=61115622";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GAVIN's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">TECH CORNER</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/category" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="【五行僧】">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar-02-21.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GAVIN's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                常见分布式全局唯一ID生成策略及算法的对比
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T19:34:27+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/技术文章/" itemprop="url" rel="index">
+                    <span itemprop="name">技术文章</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>全局唯一的 ID 几乎是所有系统都会遇到的刚需求。这个 id 在搜索, 存储数据, 加快检索速度 等等很多方面有着重要的意义。工业上有多种策略来获取这个全局唯一的id，针对常见的几种场景，我在这里进行简单的总结和对比。<br><a id="more"></a>  </p>
+<hr>
+<h3 id="简单分析一下需求-1"><a href="#简单分析一下需求-1" class="headerlink" title="简单分析一下需求 [1]"></a>简单分析一下需求 [1]</h3><p>所谓全局唯一的 id 其实往往对应是<strong>生成唯一记录标识的业务需求</strong>。  </p>
+<p>这个 id 常常是数据库的<strong>主键</strong>，数据库上会建立聚集索引（cluster index），即在物理存储上以这个字段排序。这个记录标识上的查询，往往又有分页或者排序的业务需求。所以往往要有一个time字段，并且在time字段上建立普通索引（non-cluster index）。普通索引存储的是实际记录的指针，其访问效率会比聚集索引慢，如果记录标识在生成时能够基本按照时间有序，则可以省去这个time字段的索引查询。  </p>
+<p>这就引出了记录标识生成（也就是上文提到的三个XXX-id）的两大核心需求：  </p>
+<ul>
+<li><strong>全局唯一</strong>  </li>
+<li><strong>趋势有序</strong>  </li>
+</ul>
+<h3 id="常见生成策略的优缺点对比-2"><a href="#常见生成策略的优缺点对比-2" class="headerlink" title="常见生成策略的优缺点对比 [2]"></a>常见生成策略的优缺点对比 [2]</h3><h4 id="方法一-用数据库的-auto-increment-来生成"><a href="#方法一-用数据库的-auto-increment-来生成" class="headerlink" title="方法一: 用数据库的 auto_increment 来生成"></a>方法一: 用数据库的 auto_increment 来生成</h4><p><strong>优点：</strong>  </p>
+<ol>
+<li>此方法使用数据库原有的功能，所以相对简单  </li>
+<li>能够保证唯一性  </li>
+<li>能够保证递增性  </li>
+<li>id 之间的步长是固定且可自定义的  </li>
+</ol>
+<p><strong>缺点：</strong>  </p>
+<ol>
+<li>可用性难以保证：数据库常见架构是 一主多从 + 读写分离，生成自增ID是写请求  <strong>主库挂了就玩不转了</strong>  </li>
+<li>扩展性差，性能有上限：因为写入是单点，数据库主库的写性能决定ID的生成性能上限，并且 <strong>难以扩展</strong>  </li>
+</ol>
+<h5 id="改进方案："><a href="#改进方案：" class="headerlink" title="改进方案："></a>改进方案：</h5><ul>
+<li>冗余主库，避免写入单点  </li>
+<li>数据水平切分，保证各主库生成的ID不重复  <img src="/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise01.png" alt="方法一改进方案的结构图" title="方法一改进方案的结构图">  
+如上图所述，由1个写库变成3个写库，<strong>每个写库设置不同的 auto_increment 初始值，以及相同的增长步长</strong>，以保证每个数据库生成的ID是不同的（上图中库0生成0,3,6,9…，库1生成1,4,7,10，库2生成2,5,8,11…）  </li>
+</ul>
+<p>改进后的架构保证了可用性，但缺点是  </p>
+<ul>
+<li>丧失了ID生成的“绝对递增性”：先访问库0生成0,3，再访问库1生成1，可能导致在非常短的时间内，ID生成不是绝对递增的（这个问题不大，目标是趋势递增，不是绝对递增  </li>
+<li>数据库的写压力依然很大，每次生成ID都要访问数据库  </li>
+</ul>
+<p>为了解决这些问题，引出了以下方法：  </p>
+<h4 id="方法二：单点批量ID生成服务"><a href="#方法二：单点批量ID生成服务" class="headerlink" title="方法二：单点批量ID生成服务"></a>方法二：单点批量ID生成服务</h4><p>  分布式系统之所以难，很重要的原因之一是“没有一个全局时钟，难以保证绝对的时序”，要想保证绝对的时序，还是只能使用单点服务，用本地时钟保证“绝对时序”。<br>  数据库写压力大，是因为每次生成ID都访问了数据库，可以<strong>使用批量的方式降低数据库写压力</strong>。<br><img src="/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise02.png" alt="方法二的结构图" title="方法二的结构图"><br>  如上图所述，数据库使用双master保证可用性，数据库中只存储当前ID的最大值，例如4。  </p>
+<p>  ID生成服务假设每次批量拉取5个ID，服务访问数据库，将当前ID的最大值修改为4，这样应用访问ID生成服务索要ID，ID生成服务不需要每次访问数据库，就能依次派发0,1,2,3,4这些ID了。  </p>
+<p>  当ID发完后，再将ID的最大值修改为11，就能再次派发6,7,8,9,10,11这些ID了，于是数据库的压力就降低到原来的1/6。  </p>
+<p><strong>优点：</strong>  </p>
+<ul>
+<li>保证了ID生成的绝对递增有序  </li>
+<li>大大的降低了数据库的压力，ID生成可以做到每秒生成几万几十万个  </li>
+</ul>
+<p><strong>缺点：</strong>  </p>
+<ul>
+<li><strong>服务仍然是单点</strong>  </li>
+<li>如果服务挂了，服务重启起来之后，继续生成ID可能会不连续，中间出现空洞（服务内存是保存着0,1,2,3,4，数据库中max-id是4，分配到3时，服务重启了，下次会从5开始分配，3和4就成了空洞，不过这个问题也不大）  </li>
+<li>虽然每秒可以生成几万几十万个ID，但毕竟还是有性能上限，无法进行水平扩展  </li>
+</ul>
+<h5 id="改进方案"><a href="#改进方案" class="headerlink" title="改进方案"></a>改进方案</h5><p>  单点服务的常用高可用优化方案是“备用服务”，也叫“影子服务”，所以我们能用以下方法优化上述缺点：<br><img src="/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise03.png" alt="方法二改进方案的结构图" title="方法二改进方案的结构图"><br>  如上图，对外提供的服务是主服务，有一个影子服务时刻处于备用状态，当主服务挂了的时候影子服务顶上。这个切换的过程对调用方是透明的，可以自动完成，常用的技术是 <strong>vip+keepalived</strong>，具体就不在这里展开。另外，ID-gen-service也可以实施水平扩展，以解决上述缺点，但会引发一致性问题。  </p>
+<h4 id="方法三：uuid-guid"><a href="#方法三：uuid-guid" class="headerlink" title="方法三：uuid / guid"></a>方法三：uuid / guid</h4><p>  不管是通过数据库，还是通过服务来生成ID，业务方Application都需要进行一次远程调用，比较耗时。uuid是一种常见的本地生成ID的方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UUID uuid = UUID.randomUUID();  </div></pre></td></tr></table></figure>  </p>
+<p><strong>优点：</strong>  </p>
+<ul>
+<li>本地生成ID，不需要进行远程调用，时延低  </li>
+<li>扩展性好，基本可以认为没有性能上限  </li>
+</ul>
+<p><strong>缺点：</strong>  </p>
+<ul>
+<li><strong>无法保证趋势递增</strong>  </li>
+<li>uuid过长，往往用字符串表示，<strong>作为主键建立索引查询效率低</strong>，常见优化方案为“转化为两个uint64整数存储”或者“折半存储”（折半后不能保证唯一性）  </li>
+</ul>
+<h4 id="方法四：取当前毫秒数"><a href="#方法四：取当前毫秒数" class="headerlink" title="方法四：取当前毫秒数"></a>方法四：取当前毫秒数</h4><p>  uuid是一个本地算法，生成性能高，但无法保证趋势递增，且作为字符串ID检索效率低，有没有一种能保证递增的本地算法呢？ - 取当前毫秒数是一种常见方案。  </p>
+<p><strong>优点：</strong>  </p>
+<ul>
+<li>本地生成ID，不需要进行远程调用，时延低  </li>
+<li>生成的ID趋势递增  </li>
+<li>生成的ID是整数，建立索引后查询效率高  </li>
+</ul>
+<p><strong>缺点：</strong>  </p>
+<ul>
+<li><strong>如果并发量超过1000，会生成重复的ID</strong>  </li>
+</ul>
+<p>这个缺点要了命了，不能保证ID的唯一性。当然，使用微秒可以降低冲突概率，但每秒最多只能生成1000000个ID，再多的话就一定会冲突了，所以使用微秒并不从根本上解决问题。  </p>
+<h4 id="方法五：使用-Redis-来生成-id"><a href="#方法五：使用-Redis-来生成-id" class="headerlink" title="方法五：使用 Redis 来生成 id"></a>方法五：使用 Redis 来生成 id</h4><p>当使用数据库来生成ID性能不够要求的时候，我们可以尝试使用Redis来生成ID。这主要依赖于<strong>Redis是单线程的</strong>，所以也可以用生成全局唯一的ID。可以用Redis的原子操作 <strong>INCR</strong> 和 <strong>INCRBY</strong> 来实现。  </p>
+<p><strong>优点：</strong>  </p>
+<ul>
+<li>依赖于数据库，灵活方便，且性能优于数据库。  </li>
+<li>数字ID天然排序，对分页或者需要排序的结果很有帮助。  </li>
+</ul>
+<p><strong>缺点：</strong>  </p>
+<ul>
+<li>如果系统中没有Redis，还需要引入新的组件，增加系统复杂度。  </li>
+<li>需要编码和配置的工作量比较大。  </li>
+</ul>
+<h4 id="方法六：Twitter-开源的-Snowflake-算法"><a href="#方法六：Twitter-开源的-Snowflake-算法" class="headerlink" title="方法六：Twitter 开源的 Snowflake 算法"></a>方法六：Twitter 开源的 Snowflake 算法</h4><p>snowflake 是 twitter 开源的分布式ID生成算法，其核心思想为，一个long型的ID：  </p>
+<ul>
+<li>41 bit 作为毫秒数 - <strong>41位的长度可以使用69年</strong>  </li>
+<li>10 bit 作为机器编号 （5个bit是数据中心，5个bit的机器ID） - <strong>10位的长度最多支持部署1024个节点</strong>  </li>
+<li><p>12 bit 作为毫秒内序列号 - <strong>12位的计数顺序号支持每个节点每毫秒产生4096个ID序号</strong>  </p>
+<img src="/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/snowflake.png" alt="Snowflake图示" title="Snowflake图示">  
+<p>算法单机每秒内理论上最多可以生成1000*(2^12)，也就是400W的ID，完全能满足业务的需求。  </p>
+<p>该算法 java 版本的实现代码如下：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SnowflakeIdGenerator</span> </span>&#123;</div><div class="line">    <span class="comment">//================================================Algorithm's Parameter=============================================</span></div><div class="line"></div><div class="line">    <span class="comment">// 系统开始时间截 (UTC 2017-06-28 00:00:00)</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> startTime = <span class="number">1498608000000L</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 机器id所占的位数</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> workerIdBits = <span class="number">5L</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 数据标识id所占的位数</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> dataCenterIdBits = <span class="number">5L</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 支持的最大机器id(十进制)，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数)</span></div><div class="line">    <span class="comment">// -1L 左移 5位 (worker id 所占位数) 即 5位二进制所能获得的最大十进制数 - 31</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> maxWorkerId = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; workerIdBits);</div><div class="line"></div><div class="line">    <span class="comment">// 支持的最大数据标识id - 31</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> maxDataCenterId = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; dataCenterIdBits);</div><div class="line"></div><div class="line">    <span class="comment">// 序列在id中占的位数</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> sequenceBits = <span class="number">12L</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 机器ID 左移位数 - 12 (即末 sequence 所占用的位数)</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> workerIdMoveBits = sequenceBits;</div><div class="line"></div><div class="line">    <span class="comment">// 数据标识id 左移位数 - 17(12+5)</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> dataCenterIdMoveBits = sequenceBits + workerIdBits;</div><div class="line"></div><div class="line">    <span class="comment">// 时间截向 左移位数 - 22(5+5+12)</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> timestampMoveBits = sequenceBits + workerIdBits + dataCenterIdBits;</div><div class="line"></div><div class="line">    <span class="comment">// 生成序列的掩码(12位所对应的最大整数值)，这里为4095 (0b111111111111=0xfff=4095)</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> sequenceMask = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; sequenceBits);</div><div class="line"></div><div class="line">    <span class="comment">//=================================================Works's Parameter================================================</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 工作机器ID(0~31)</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> workerId;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 数据中心ID(0~31)</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> dataCenterId;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 毫秒内序列(0~4095)</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> sequence = <span class="number">0L</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 上次生成ID的时间截</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">long</span> lastTimestamp = -<span class="number">1L</span>;</div><div class="line"></div><div class="line">    <span class="comment">//===============================================Constructors=======================================================</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 构造函数</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> workerId     工作ID (0~31)</div><div class="line">     * <span class="doctag">@param</span> dataCenterId 数据中心ID (0~31)</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SnowflakeIdGenerator</span><span class="params">(<span class="keyword">long</span> workerId, <span class="keyword">long</span> dataCenterId)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (workerId &gt; maxWorkerId || workerId &lt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(<span class="string">"Worker Id can't be greater than %d or less than 0"</span>, maxWorkerId));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (dataCenterId &gt; maxDataCenterId || dataCenterId &lt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(<span class="string">"DataCenter Id can't be greater than %d or less than 0"</span>, maxDataCenterId));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>.workerId = workerId;</div><div class="line">        <span class="keyword">this</span>.dataCenterId = dataCenterId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ==================================================Methods========================================================</span></div><div class="line"></div><div class="line">    <span class="comment">// 线程安全的获得下一个 ID 的方法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">long</span> <span class="title">nextId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">long</span> timestamp = currentTime();</div><div class="line"></div><div class="line">        <span class="comment">//如果当前时间小于上一次ID生成的时间戳: 说明系统时钟回退过 - 这个时候应当抛出异常</span></div><div class="line">        <span class="keyword">if</span> (timestamp &lt; lastTimestamp) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(</div><div class="line">                    String.format(<span class="string">"Clock moved backwards.  Refusing to generate id for %d milliseconds"</span>, lastTimestamp - timestamp));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//如果是同一时间生成的，则进行毫秒内序列</span></div><div class="line">        <span class="keyword">if</span> (lastTimestamp == timestamp) &#123;</div><div class="line">            sequence = (sequence + <span class="number">1</span>) &amp; sequenceMask;</div><div class="line">            <span class="comment">//毫秒内序列溢出 即 序列 &gt; 4095</span></div><div class="line">            <span class="keyword">if</span> (sequence == <span class="number">0</span>) &#123;</div><div class="line">                <span class="comment">//阻塞到下一个毫秒,获得新的时间戳</span></div><div class="line">                timestamp = blockTillNextMillis(lastTimestamp);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//时间戳改变，毫秒内序列重置</span></div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            sequence = <span class="number">0L</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//上次生成ID的时间截</span></div><div class="line">        lastTimestamp = timestamp;</div><div class="line"></div><div class="line">        <span class="comment">//移位并通过或运算拼到一起组成64位的ID</span></div><div class="line">        <span class="keyword">return</span> ((timestamp - startTime) &lt;&lt; timestampMoveBits) <span class="comment">//</span></div><div class="line">                | (dataCenterId &lt;&lt; dataCenterIdMoveBits) <span class="comment">//</span></div><div class="line">                | (workerId &lt;&lt; workerIdMoveBits) <span class="comment">//</span></div><div class="line">                | sequence;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 阻塞到下一个毫秒 即 直到获得新的时间戳</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">long</span> <span class="title">blockTillNextMillis</span><span class="params">(<span class="keyword">long</span> lastTimestamp)</span> </span>&#123;</div><div class="line">        <span class="keyword">long</span> timestamp = currentTime();</div><div class="line">        <span class="keyword">while</span> (timestamp &lt;= lastTimestamp) &#123;</div><div class="line">            timestamp = currentTime();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> timestamp;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 获得以毫秒为单位的当前时间</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">long</span> <span class="title">currentTime</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> System.currentTimeMillis();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//====================================================Test Case=====================================================</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        SnowflakeIdGenerator idWorker = <span class="keyword">new</span> SnowflakeIdGenerator(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</div><div class="line">            <span class="keyword">long</span> id = idWorker.nextId();</div><div class="line">            System.out.println(Long.toBinaryString(id));</div><div class="line">            System.out.println(id);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;  </div></pre></td></tr></table></figure>    
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.jpeg" alt="【五行僧】 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpeg" alt="【五行僧】 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DB/" rel="tag"># DB</a>
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/唯一主键/" rel="tag"># 唯一主键</a>
+          
+            <a href="/tags/auto-increment/" rel="tag"># auto_increment</a>
+          
+            <a href="/tags/uuid/" rel="tag"># uuid</a>
+          
+            <a href="/tags/Redis生成id/" rel="tag"># Redis生成id</a>
+          
+            <a href="/tags/INCR/" rel="tag"># INCR</a>
+          
+            <a href="/tags/INCRBY/" rel="tag"># INCRBY</a>
+          
+            <a href="/tags/snowflake/" rel="tag"># snowflake</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/17/浅入浅出-SpringBoot-集成-Mybatis/" rel="next" title="浅入浅出 SpringBoot 集成 Mybatis">
+                <i class="fa fa-chevron-left"></i> 浅入浅出 SpringBoot 集成 Mybatis
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar-02-21.png"
+               alt="【五行僧】" />
+          <p class="site-author-name" itemprop="name">【五行僧】</p>
+           
+              <p class="site-description motion-element" itemprop="description">你若盛开 清风自来</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/category/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="mailto:ligaozhao@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/GavinLee1" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="ttp://www.jianshu.com/users/234e08dfc25c/timeline" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-pencil-square-o"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100008715696799" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/gaozhao-li-ba758091?trk=hp-identity-name" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单分析一下需求-1"><span class="nav-number">1.</span> <span class="nav-text">简单分析一下需求 [1]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见生成策略的优缺点对比-2"><span class="nav-number">2.</span> <span class="nav-text">常见生成策略的优缺点对比 [2]</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一-用数据库的-auto-increment-来生成"><span class="nav-number">2.1.</span> <span class="nav-text">方法一: 用数据库的 auto_increment 来生成</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#改进方案："><span class="nav-number">2.1.1.</span> <span class="nav-text">改进方案：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法二：单点批量ID生成服务"><span class="nav-number">2.2.</span> <span class="nav-text">方法二：单点批量ID生成服务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#改进方案"><span class="nav-number">2.2.1.</span> <span class="nav-text">改进方案</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法三：uuid-guid"><span class="nav-number">2.3.</span> <span class="nav-text">方法三：uuid / guid</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法四：取当前毫秒数"><span class="nav-number">2.4.</span> <span class="nav-text">方法四：取当前毫秒数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法五：使用-Redis-来生成-id"><span class="nav-number">2.5.</span> <span class="nav-text">方法五：使用 Redis 来生成 id</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法六：Twitter-开源的-Snowflake-算法"><span class="nav-number">2.6.</span> <span class="nav-text">方法六：Twitter 开源的 Snowflake 算法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">【五行僧】</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'gavintechblog';
+      var disqus_identifier = '2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/';
+
+      var disqus_title = "常见分布式全局唯一ID生成策略及算法的对比";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+</body>
+</html>
