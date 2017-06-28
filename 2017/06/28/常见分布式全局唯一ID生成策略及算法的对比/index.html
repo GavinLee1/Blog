@@ -109,7 +109,7 @@
 <meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise02.png">
 <meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise03.png">
 <meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/snowflake.png">
-<meta property="og:updated_time" content="2017-06-28T12:21:46.000Z">
+<meta property="og:updated_time" content="2017-06-28T12:27:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常见分布式全局唯一ID生成策略及算法的对比">
 <meta name="twitter:description" content="全局唯一的 ID 几乎是所有系统都会遇到的刚需。这个 id 在搜索, 存储数据, 加快检索速度 等等很多方面都有着重要的意义。工业上有多种策略来获取这个全局唯一的id，针对常见的几种场景，我在这里进行简单的总结和对比。">
@@ -495,11 +495,11 @@
 <h5 id="改进方案："><a href="#改进方案：" class="headerlink" title="改进方案："></a>改进方案：</h5><ul>
 <li>冗余主库，避免写入单点  </li>
 <li>数据水平切分，保证各主库生成的ID不重复  <img src="/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise01.png" alt="方法一改进方案的结构图" title="方法一改进方案的结构图">  
-如上图所述，由1个写库变成3个写库，<strong>每个写库设置不同的 auto_increment 初始值，以及相同的增长步长</strong>，以保证每个数据库生成的ID是不同的（上图中库0生成0,3,6,9…，库1生成1,4,7,10，库2生成2,5,8,11…）  </li>
+如上图所述，由1个写库变成3个写库，<strong>每个写库设置不同的 auto_increment 初始值，以及相同的增长步长</strong>，以保证每个数据库生成的ID是不同的（上图中DB 01生成0,3,6,9…，DB 02生成1,4,7,10，DB 03生成2,5,8,11…）  </li>
 </ul>
 <p>改进后的架构保证了可用性，但缺点是  </p>
 <ul>
-<li>丧失了ID生成的“绝对递增性”：先访问库0生成0,3，再访问库1生成1，可能导致在非常短的时间内，ID生成不是绝对递增的（这个问题不大，目标是趋势递增，不是绝对递增  </li>
+<li>丧失了ID生成的“绝对递增性”：先访问DB 01生成0,3，再访问DB 02生成1，可能导致在非常短的时间内，ID生成不是绝对递增的（这个问题不大，目标是趋势递增，不是绝对递增  </li>
 <li>数据库的写压力依然很大，每次生成ID都要访问数据库  </li>
 </ul>
 <p>为了解决这些问题，引出了以下方法：  </p>
@@ -517,7 +517,7 @@
 <li>如果服务挂了，服务重启起来之后，继续生成ID可能会不连续，中间出现空洞（服务内存是保存着0,1,2,3,4，数据库中max-id是4，分配到3时，服务重启了，下次会从5开始分配，3和4就成了空洞，不过这个问题也不大）  </li>
 <li>虽然每秒可以生成几万几十万个ID，但毕竟还是有性能上限，无法进行水平扩展  </li>
 </ul>
-<h5 id="改进方案"><a href="#改进方案" class="headerlink" title="改进方案"></a>改进方案</h5><p>  单点服务的常用高可用优化方案是“备用服务”，也叫“影子服务”，所以我们能用以下方法优化上述缺点：<br><img src="/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise03.png" alt="方法二改进方案的结构图" title="方法二改进方案的结构图"><br>  如上图，对外提供的服务是主服务，有一个影子服务时刻处于备用状态，当主服务挂了的时候影子服务顶上。这个切换的过程对调用方是透明的，可以自动完成，常用的技术是 <strong>vip+keepalived</strong>，具体就不在这里展开。另外，ID-gen-service也可以实施水平扩展，以解决上述缺点，但会引发一致性问题。  </p>
+<h5 id="改进方案"><a href="#改进方案" class="headerlink" title="改进方案"></a>改进方案</h5><p>  单点服务的常用高可用优化方案是“备用服务”，也叫“影子服务”，所以我们能用以下方法优化上述缺点：<br><img src="/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise03.png" alt="方法二改进方案的结构图" title="方法二改进方案的结构图"><br>  如上图，对外提供的服务是主服务，有一个影子服务时刻处于备用状态，当主服务挂了的时候影子服务顶上。这个切换的过程对调用方是透明的，可以自动完成，常用的技术是 <strong>vip+keepalived</strong>。另外，id generate service 也可以进行水平扩展，以解决上述缺点，但会引发一致性问题。  </p>
 <h4 id="方法三：uuid-guid"><a href="#方法三：uuid-guid" class="headerlink" title="方法三：uuid / guid"></a>方法三：uuid / guid</h4><p>  不管是通过数据库，还是通过服务来生成ID，业务方Application都需要进行一次远程调用，比较耗时。uuid是一种常见的本地生成ID的方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UUID uuid = UUID.randomUUID();  </div></pre></td></tr></table></figure>  </p>
 <p><strong>优点：</strong>  </p>
 <ul>
