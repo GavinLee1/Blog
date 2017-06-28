@@ -109,7 +109,7 @@
 <meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise02.png">
 <meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/optimise03.png">
 <meta property="og:image" content="https://gavinlee1.github.io/2017/06/28/常见分布式全局唯一ID生成策略及算法的对比/snowflake.png">
-<meta property="og:updated_time" content="2017-06-28T12:16:52.000Z">
+<meta property="og:updated_time" content="2017-06-28T12:21:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常见分布式全局唯一ID生成策略及算法的对比">
 <meta name="twitter:description" content="全局唯一的 ID 几乎是所有系统都会遇到的刚需。这个 id 在搜索, 存储数据, 加快检索速度 等等很多方面都有着重要的意义。工业上有多种策略来获取这个全局唯一的id，针对常见的几种场景，我在这里进行简单的总结和对比。">
@@ -475,7 +475,7 @@
 <hr>
 <h3 id="简单分析一下需求-1"><a href="#简单分析一下需求-1" class="headerlink" title="简单分析一下需求 [1]"></a>简单分析一下需求 [1]</h3><p>所谓全局唯一的 id 其实往往对应是<strong>生成唯一记录标识的业务需求</strong>。  </p>
 <p>这个 id 常常是数据库的<strong>主键</strong>，数据库上会建立聚集索引（cluster index），即在物理存储上以这个字段排序。这个记录标识上的查询，往往又有分页或者排序的业务需求。所以往往要有一个time字段，并且在time字段上建立普通索引（non-cluster index）。普通索引存储的是实际记录的指针，其访问效率会比聚集索引慢，如果记录标识在生成时能够基本按照时间有序，则可以省去这个time字段的索引查询。  </p>
-<p>这就引出了记录标识生成（也就是上文提到的三个XXX-id）的两大核心需求：  </p>
+<p>这就引出了记录标识生成的两大核心需求：  </p>
 <ul>
 <li><strong>全局唯一</strong>  </li>
 <li><strong>趋势有序</strong>  </li>
